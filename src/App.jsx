@@ -1,69 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import GeneralForm from "./components/GeneralForm.jsx";
+import EducationForm from "./components/EducationForm.jsx";
+import ExperienceForm from "./components/ExperienceForm.jsx";
+import ResumeTemplate from "./components/ResumeTemplate.jsx";
 
-<div className="min-h-screen bg-gray-50 p-6">
-  <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <div className="lg:col-span-2 space-y-6">
-      <div className="bg-white p-6 rounded-lg shadow no-print">
-        <div className="flex items-center justify-between mb-3">
-          <h1 className="text-2xl font-semibold">CV Builder</h1>
-          <div className="flex items-center gap-3 text-sm">
-            <div className="flex items-center gap-2">
-              <span
-                className={`autosave-dot ${
-                  autosaveStatus === "saving"
-                    ? "autosave-saving"
-                    : "autosave-saved"
-                }`}
-              />
-              <span>{autosaveStatus === "saving" ? "Saving..." : "Saved"}</span>
-            </div>
-            <button
-              onClick={() => window.print()}
-              className="px-3 py-1 bg-indigo-600 text-white rounded"
-            >
-              Print
-            </button>
-          </div>
+export default function App() {
+  // 🌐 Global state for CV data
+  const [general, setGeneral] = useState({
+    name: "",
+    title: "",
+    phone: "",
+    email: "",
+    location: "",
+    linkedin: "",
+    summary: "",
+    photo: "",
+  });
+
+  const [education, setEducation] = useState([
+    { id: 1, school: "", degree: "", year: "" },
+  ]);
+
+  const [experience, setExperience] = useState([
+    { id: 1, company: "", position: "", period: "", description: "" },
+  ]);
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+      <h1 className="text-3xl font-bold text-center text-blue-700 mb-6">
+        CV Builder Application
+      </h1>
+
+      {/* FORM SECTION */}
+      <div className="flex flex-col md:flex-row gap-6 max-w-6xl mx-auto">
+        <div className="flex-1 space-y-6 bg-white p-6 shadow rounded">
+          <GeneralForm general={general} setGeneral={setGeneral} />
+          <EducationForm education={education} setEducation={setEducation} />
+          <ExperienceForm experience={experience} setExperience={setExperience} />
         </div>
 
-        <GeneralForm
-          value={general}
-          onChange={setGeneral}
-          editing={editing.general}
-          setEditing={(v) => setEditing((prev) => ({ ...prev, general: v }))}
-        />
-
-        <EducationForm
-          value={education}
-          onChange={setEducation}
-          editing={editing.education}
-          setEditing={(v) => setEditing((prev) => ({ ...prev, education: v }))}
-        />
-
-        <ExperienceForm
-          value={experience}
-          onChange={setExperience}
-          editing={editing.experience}
-          setEditing={(v) => setEditing((prev) => ({ ...prev, experience: v }))}
-        />
-      </div>
-
-      <div className="bg-white p-4 rounded-lg shadow no-print">
-        <h2 className="text-lg font-semibold mb-2">Export</h2>
-        <p className="text-sm text-gray-600 mb-3">
-          Download a one-page PDF based on the resume template.
-        </p>
-        <ResumeTemplate.ExportButton
-          data={{ general, education, experience }}
-        />
+        {/* LIVE PREVIEW SECTION */}
+        <div className="flex-1">
+          <ResumeTemplate
+            general={general}
+            education={education}
+            experience={experience}
+          />
+        </div>
       </div>
     </div>
-
-    <aside className="bg-white p-6 rounded-lg shadow resume-root">
-      <Preview
-        data={{ general, education, experience }}
-        setEditing={setEditing}
-      />
-    </aside>
-  </div>
-</div>;
+  );
+}
