@@ -5,9 +5,9 @@ import ExperienceForm from "./components/ExperienceForm.jsx";
 import ResumeTemplate from "./components/ResumeTemplate.jsx";
 
 export default function App() {
-  // 🌐 Global state for CV data
+  // 🌐 Global state for CV data, using 'fullName' to match GeneralForm
   const [general, setGeneral] = useState({
-    name: "",
+    fullName: "",
     title: "",
     phone: "",
     email: "",
@@ -18,12 +18,25 @@ export default function App() {
   });
 
   const [education, setEducation] = useState([
-    { id: 1, school: "", degree: "", year: "" },
+    // Using 'period' to match the ResumeTemplate and EducationForm fields
+    { id: 1, school: "", degree: "", period: "" }, 
   ]);
 
   const [experience, setExperience] = useState([
     { id: 1, company: "", position: "", period: "", description: "" },
   ]);
+
+  // State to control which section is in 'editing' mode
+  const [editing, setEditing] = useState({
+    general: true, // Start with general form open
+    education: false,
+    experience: true, // Experience form is always in the form component itself
+  });
+  
+  // Helper function to update a single editing state property
+  const updateEditing = (key, isEditing) => {
+    setEditing((prev) => ({ ...prev, [key]: isEditing }));
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -34,9 +47,26 @@ export default function App() {
       {/* FORM SECTION */}
       <div className="flex flex-col md:flex-row gap-6 max-w-6xl mx-auto">
         <div className="flex-1 space-y-6 bg-white p-6 shadow rounded">
-          <GeneralForm general={general} setGeneral={setGeneral} />
-          <EducationForm education={education} setEducation={setEducation} />
-          <ExperienceForm experience={experience} setExperience={setExperience} />
+          {/* Using 'value' and 'onChange' props as expected by GeneralForm */}
+          <GeneralForm
+            value={general}
+            onChange={setGeneral} 
+            editing={editing.general}
+            setEditing={(isEditing) => updateEditing('general', isEditing)}
+          />
+
+          <EducationForm
+            value={education}
+            onChange={setEducation}
+            editing={editing.education}
+            setEditing={(isEditing) => updateEditing('education', isEditing)}
+          />
+          
+          {/* ExperienceForm is kept simple, assuming it's always editable */}
+          <ExperienceForm 
+            experience={experience} 
+            setExperience={setExperience} 
+          />
         </div>
 
         {/* LIVE PREVIEW SECTION */}

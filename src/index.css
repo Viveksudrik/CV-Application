@@ -5,15 +5,20 @@
 /* Small printable tweaks */
 @media print {
   body {
+    /* Ensures background colors and images are printed */
     -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
   .no-print {
+    /* Uses higher specificity to ensure removal */
     display: none !important;
   }
   .resume-root {
+    /* Resets for clean printing */
     box-shadow: none !important;
     margin: 0 !important;
     border-radius: 0 !important;
+    width: 100% !important; /* Ensure it takes full print width */
   }
 }
 
@@ -21,6 +26,8 @@
 .resume-root {
   max-width: 900px;
   margin: auto;
+  /* Adding standard print font just in case */
+  font-family: Arial, sans-serif; 
 }
 
 .resume-section-title {
@@ -41,6 +48,7 @@
 
 /* limit summary text to reasonable print length */
 .summary {
+  /* Use normal line break behavior for better visual consistency */
   white-space: pre-wrap;
 }
 

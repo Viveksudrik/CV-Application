@@ -62,7 +62,7 @@ export default function ExperienceForm({ experience, setExperience }) {
           />
 
           <button
-            type="button"
+            type="button" // FIX: Added type="button"
             onClick={() => removeExperience(exp.id)}
             className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
           >
@@ -72,7 +72,7 @@ export default function ExperienceForm({ experience, setExperience }) {
       ))}
 
       <button
-        type="button"
+        type="button" // FIX: Added type="button"
         onClick={addExperience}
         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
       >

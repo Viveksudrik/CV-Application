@@ -1,4 +1,6 @@
 import React from "react";
+// Assuming ResumeTemplate.Embed is a placeholder and not a real export/component
+// This file is not used in the final App.jsx but is provided as-is.
 
 export default function Preview({ data, setEditing }) {
   const { general, education, experience } = data;
@@ -66,7 +68,8 @@ export default function Preview({ data, setEditing }) {
       </div>
 
       <div className="mt-6">
-        <ResumeTemplate.Embed data={data} />
+        {/* If ResumeTemplate.Embed is intended to be used, it must be properly exported from ResumeTemplate.jsx */}
+        {/* <ResumeTemplate.Embed data={data} /> */} 
       </div>
     </div>
   );
